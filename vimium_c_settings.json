@@ -1,0 +1,26 @@
+{
+	"name": "Vimium C",
+	"@time": "2/23/2023, 11:24:54 AM",
+	"time": 1677144294987,
+	"environment": {
+		"extension": "1.99.97",
+		"platform": "linux",
+		"chromium": 110
+	},
+	"exclusionRules": [
+		{
+			"passKeys": "< < > > F i ",
+			"pattern": ":https://www.youtube.com/"
+		}
+	],
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"unmap t",
+		""
+	],
+	"searchUrl": "https://duckduckgo.com/?q=$s DuckDuckGo",
+	"showAdvancedCommands": false,
+	"showAdvancedOptions": false,
+	"vimSync": true
+}
