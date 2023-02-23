@@ -1,0 +1,73 @@
+GIT Recap:
+1. 13 page
+2. 26-64 p.
+(
+     git add <file> - add file to INDEX
+     git commit -m <message> - add files from INDEX to DB
+     git checkout -- <file> - delete all changes from INDEX (LOCALLY!!!)
+     git reset HEAD <file> - delete file from INDEX
+     git log - history of commits
+     git status (-s) - files' status (MODIFIED, STAGED (ADDED TO INDEX), UNTRACKED, etc.)
+     git remote (-v) - list of remote repositories (if -v: show fetch and merge urls)
+     git remote add <remote_repository_shortname> <url> - add remote repository with its corresponding shortname and URL
+     git fetch <remote_repository_shortname> - get all changes from remote repository
+     git push <remote_repository_shortname> <local_branch_name> - send all changes made locally in a particular branch to remote repository
+     git remote show <remote_repository_shortname> - show detail info about remote repository (for instance, tracked, new branches on it, etc.)
+     git remote rename <old_remote_repository_shortname> <new_remote_repository_shortname> - rename a remote repository's shortname
+     git remote rm <remote_repository_shortname> - delete a remote repository
+     TAGS:
+          git tag (-l) - list of tags
+          git tag -l "1.8.5*" - list of tags by filter
+          git tag -a <tagname> -m "<message>" - create an annotation tag
+          git tag <tagname> - create a common tag
+          git show <tagname> - get info about tag and commit
+          git tag -a <tagname> <commit_sha-1> - create a tag after some history of commits
+          git push <remote_repository_shortname> <tagname> - send tag to remote repository
+          git push <remote_repository_shortname> --tags - send all tags to remote repository
+          git tag -d <tagname> - delete a common tag
+          git push <remote_repository_shortname> :refs/tags/<tagname> - delete a tag on remote repository
+          git checkout <tagname> - transfer to tag (DETACHED HEAD!!!)
+)
+3. 65-108 p.
+(
+     BASICS OF BRANCHING:
+          commit (snapshot) -> tree -> blob files
+          git branch <branchname> - create a branch
+          git checkout <branchname> - transfer to a branch
+          git checkout -b <branchname> - create and transfer to a branch at the moment
+          git merge <branchname> - merge a particular branch into a current branch
+          git branch -d <branchname> - delete a branch
+          git branch - list of branches
+          git branch -v - list of branches with last commit on it
+          git branch --merged (--no-merged) - list of merged branches with current one (*)
+          git branch --move <old_branch_name> <new_branch_name> - rename a branch locally
+          git push --set-upstream <remote_repository_shortname> <newbranchname> - rename a branch remotely (but old branch names stores remotely as well, so we have to delete it)
+          git push <remote_repository_shortname> --delete <oldbranchname|branchname> - delete an old branch remotely
+          git branch --all - list of all branches (remote and local ones)
+          REMOTE BRANCHES:
+               git ls-remote <remote_repository_shortname> - list of remote links (tags, branches, etc.)
+               git remote show <remote_repository_shortname> - the same as previous
+               remote branches look like <remote_repository_shortname>/<branchname> locally
+               git fetch <remote_repository_shortname> - sync local remote branch with remote branch itself
+               git push <remote_repository_shortname> <localbranchname> - send a local branch on remote repository
+               git push <remote_repository_shortname> <localbranchname>:<remotebranchname> - the same as previous but we can rename a local branch while sending on remote repository
+               git checkout -b <localbranchname> <remote_repository_name>/<remote_branchname> - create a local branch from remote one that we don't have loccaly
+               git branch -vv - detail info how local branches are connected to remote ones
+               git fetch --all - get full info from all remote repositories
+          BRANCH REBASE:
+               git rebase <basebranch> <topicbranch> - rebase a topic branch ON base branch
+               git rebase --onto <basebranch> <topicbranchv1> <topicbranchv2> - find commits on <topicbranchv2> regarding <topicbranchv1> and rebase ON <basebranch>
+)
+4. 229-237 p.
+(
+     
+)
+5. 237-242 p.
+(
+
+)
+6. 256-287 p.
+(
+
+)
+
