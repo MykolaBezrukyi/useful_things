@@ -1,0 +1,18 @@
+user]
+        name = Mykola Bezrukyi
+        email = mykola_bezrukyi@epam.com
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+        br = branch
+        st = status
+        st = -add
+        st = --add
+        st = status --short
+        lp = log -p
+        unstage = reset HEAD --
+        last = log -1 HEAD
+        pr = log --oneline --graph --all --decorate
+[core]
+        editor = vim
