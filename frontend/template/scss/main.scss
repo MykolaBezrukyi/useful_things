@@ -14,17 +14,13 @@
 }
 
 @function rem($px) {
-    $result: math.div($px, 16px) + rem;
+    $result: math.div($px, 16) + rem;
     @return $result;
 }
 
-@function em($px, $current) {
-    @if ($current>0) {
-        $result: math.div($px, $current) + em;
-    } @else {
-        $result: math.div($px, 16px) + em;
-    }
-    @return $resutl;
+@function em($px) {
+    $result: math.div($px, 16) + em;
+    @return $result;
 }
 
 /* ========================= */
@@ -68,7 +64,7 @@ $responsiveType: 1;
         // < container
         #{$property}: $startSize + px;
         @media (max-width: #{$maxWidthContainer + px}) {
-            #{$property}: calc(#{$minSize +px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
         }
     } @else if $type==2 {
         // > container
