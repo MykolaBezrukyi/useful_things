@@ -1,0 +1,72 @@
+/* ========================= */
+
+$minWidth: 320px; // min width of sceen (smartphone)
+$maxWidth: 1920px; // if there is no container
+$maxWidthContainer: 1170px;
+$fontSize: 16px;
+$fontWeight: 400;
+$fontFamily: "Montserrat", sans-serif;
+$fontColor: rgba(4, 15, 9, 1);
+
+@function prc($pxOne, $pxTwo) {
+    $result: math.div($pxOne, $pxTwo) * 100%;
+    @return $result;
+}
+
+@function rem($px) {
+    $result: math.div($px, $fontSize) + rem;
+    @return $result;
+}
+
+@mixin adaptive-value($property, $startSize, $minSize, $type) {
+    $addSize: $startSize - $minSize;
+    @if $type==1 {
+        // < container
+        #{$property}: $startSize + px;
+        @media (max-width: #{$maxWidthContainer + px}) {
+            #{$property}: calc(#{$minSize +px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
+        }
+    } @else if $type==2 {
+        // > container
+        #{$property}: $startSize + px;
+        @media (min-width: #{$maxWidthContainer + px}) {
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+        }
+    } @else {
+        // always
+        #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+    }
+}
+
+/* ========================= */
+
+@import "null.scss";
+
+/* ========================= */
+
+[class*="__container"] {
+    max-width: 1510px;
+    margin: 0 auto;
+    padding: 0px 15px;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+}
+
+.page {
+    flex: 1 1 auto;
+}
+
+/* ========================= */
+
+@import "header.scss";
+
+/* ========================= */
+
+@import "footer.scss";
+
+/* ========================= */
