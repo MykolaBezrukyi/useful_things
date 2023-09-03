@@ -1,12 +1,12 @@
 /* ========================= */
 
-$minWidth: 320px; // min width of sceen (smartphone)
-$maxWidth: 1920px; // if there is no container
-$maxWidthContainer: 1170px;
-$fontSize: 16px;
-$fontWeight: 400;
-$fontFamily: "Montserrat", sans-serif;
-$fontColor: rgba(4, 15, 9, 1);
+// libraries
+
+@use "sass:math";
+
+/* ========================= */
+
+// functions
 
 @function prc($pxOne, $pxTwo) {
     $result: math.div($pxOne, $pxTwo) * 100%;
@@ -14,11 +14,55 @@ $fontColor: rgba(4, 15, 9, 1);
 }
 
 @function rem($px) {
-    $result: math.div($px, $fontSize) + rem;
+    $result: math.div($px, 16px) + rem;
     @return $result;
 }
 
-@mixin adaptive-value($property, $startSize, $minSize, $type) {
+@function em($px, $current) {
+    @if ($current>0) {
+        $result: math.div($px, $current) + em;
+    } @else {
+        $result: math.div($px, 16px) + em;
+    }
+    @return $resutl;
+}
+
+/* ========================= */
+
+// constants
+
+// default font
+$fontFamily: "Montserrat", sans-serif;
+$fontSize: rem(18);
+
+// main colors
+$mainColor: rgba(4, 15, 9, 1);
+
+// min screen width
+$minWidth: 320;
+// max screen width of template
+$maxWidth: 1920;
+// max width of container
+$maxWidthContainer: 1430;
+// container padding
+$containerPadding: 30;
+// containter width
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// breakpoints
+$pc: em($containerWidth);
+$tablet: em(991.98);
+$mobile: em(767.98);
+$mobileSmall: em(479.98);
+
+// adaptive type
+$responsiveType: 1;
+
+/* ========================= */
+
+// mixins
+
+@mixin adaptiveValue($property, $startSize, $minSize, $type) {
     $addSize: $startSize - $minSize;
     @if $type==1 {
         // < container
@@ -45,9 +89,49 @@ $fontColor: rgba(4, 15, 9, 1);
 /* ========================= */
 
 [class*="__container"] {
-    max-width: 1510px;
+    max-width: $maxWidthContainer + px;
     margin: 0 auto;
     padding: 0px 15px;
+}
+
+@if ($responsiveType==1) {
+    [class*="__container"] {
+        @if ($maxWidthContainer>0) {
+            max-width: rem($containerWidth);
+            margin: 0 auto;
+        }
+        @if ($containerPadding>0) {
+            @if ($maxWidthContainer>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            } @else {
+                @include adaptiveValue("padding-left", math.div($containerPadding, 2), 15);
+                @include adaptiveValue("padding-right", math.div($containerPadding, 2), 15);
+            }
+        }
+    }
+} @else {
+    [class*="__container"] {
+        margin: 0 auto;
+        @if ($maxWidthContainer>0) {
+            max-width: rem($containerWidth);
+        } @else {
+            @if ($containerPadding>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            }
+        }
+        @media (max-width: $pc) {
+            max-width: rem(970);
+        }
+        @media (max-width: $tablet) {
+            max-width: rem(750);
+        }
+        @media (max-width: $mobile) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            }
+        }
+    }
 }
 
 .wrapper {
