@@ -25,14 +25,22 @@
 
 /* ========================= */
 
+// fonts
+
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Ubuntu:wght@400;500;700&display=swap");
+
+/* ========================= */
+
 // constants
 
 // default font
-$fontFamily: "Montserrat", sans-serif;
+$fontFamily: "Ubuntu", sans-serif;
 $fontSize: rem(18);
 
 // main colors
-$mainColor: rgba(4, 15, 9, 1);
+$mainColor: #fff;
+$greenColor: rgba(35, 177, 35, 1);
+$bgColor: #263238;
 
 // min screen width
 $minWidth: 320;
@@ -58,7 +66,7 @@ $responsiveType: 1;
 
 // mixins
 
-@mixin adaptiveValue($property, $startSize, $minSize, $type) {
+@mixin adaptiveValue($property, $startSize, $minSize, $startWidth: 0, $endWidth: 0, $type: 0) {
     $addSize: $startSize - $minSize;
     @if $type==1 {
         // < container
@@ -74,7 +82,11 @@ $responsiveType: 1;
         }
     } @else {
         // always
-        #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+        @if ($startWidth>0 and $endWidth>0) {
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - #{$endWidth + px}) / #{$startWidth - 320}));
+        } @else {
+            #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+        }
     }
 }
 
@@ -84,12 +96,6 @@ $responsiveType: 1;
 
 /* ========================= */
 
-[class*="__container"] {
-    max-width: $maxWidthContainer + px;
-    margin: 0 auto;
-    padding: 0px 15px;
-}
-
 @if ($responsiveType==1) {
     [class*="__container"] {
         @if ($maxWidthContainer>0) {
@@ -97,12 +103,7 @@ $responsiveType: 1;
             margin: 0 auto;
         }
         @if ($containerPadding>0) {
-            @if ($maxWidthContainer>0) {
-                padding: 0 rem(math.div($containerPadding, 2));
-            } @else {
-                @include adaptiveValue("padding-left", math.div($containerPadding, 2), 15);
-                @include adaptiveValue("padding-right", math.div($containerPadding, 2), 15);
-            }
+            padding: 0 rem(math.div($containerPadding, 2));
         }
     }
 } @else {
