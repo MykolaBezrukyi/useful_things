@@ -35,7 +35,7 @@
 
 // default font
 $fontFamily: "League Spartan", sans-serif;
-$fontSize: rem(18);
+$fontSize: rem(16);
 
 // main colors
 $mainColor: #fff;
@@ -66,7 +66,7 @@ $responsiveType: 1;
 
 // mixins
 
-@mixin adaptiveValue($property, $startSize, $minSize, $startWidth: -1, $endWidth: -1, $keepSize: -1) {
+@mixin adaptiveValue($property, $startSize, $minSize, $keepSize: -1, $startWidth: -1, $endWidth: -1) {
     $addSize: $startSize - $minSize;
     @if ($endWidth==-1) {
         $endWidth: 320;
