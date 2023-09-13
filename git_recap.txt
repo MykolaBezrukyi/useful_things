@@ -60,14 +60,96 @@ GIT Recap:
 )
 4. 229-237 p.
 (
-     
+	GIT SHOW:
+		git show <sha-1>|<branchname> - show the info about commit
+		HEAD^ - the parent of the HEAD
+		git show HEAD^2 - the second parent of HEAD
+		HEAD^ and HEAD~ - the same
+		git show HEAD~2 - the parent of the first parent of HEAD
+	GIT LOG ADVANCED:
+		git log <branchname1>..<branchname2> - show all commits on branchname2 but not on branchname1
+		git log origin/master..HEAD - show all commits on current branch which will be sent during next `git push`
+		git log --left-right <branchname1>...<branchname2> - show commits that are on branchname1 and branchname2 but not on both at the same time      
 )
 5. 237-242 p.
 (
-
+	GIT ADD ADVANCED:
+		git add -i <filepath> - add a filepath in interactive mode
+		git add -p <filepath> - add a part of filepath in index
 )
-6. 256-287 p.
+6. 242-248 p.
 (
-
+	GIT STASH:
+		git stash - stash files that are in index and modified to some store
+		git stash apply (--index) - apply the last change from stash store (if --index it's gonna recover the whole state of your repository at that moment)
+		git stash list - get list of stashed changes in store
+		git stash apply stash@{n} - apply a particular stash change
+		git stash drop stash@{n} - drop a stashed change from store
+		git stash --keep-index - stash the changes and keep them in index
+		git stash -u - stash modifier, index and UNTRACKED changes as well
+		git stash -a - stash all changes (even .gitignore files)
+		git stash branch <branchname> - create a new branch, transfer to commit when stash was done, try to apply stash changes, if successfully - delete a change from stash
+	GIT CLEAN:
+		git clean -f -d - delete all files and folders that are untracked, but also it can be used for deleting all changes that u don't want to store
+		git clean -d -n - ALWAYS RUN THIS COMMANDS BEFORE ABOVE ONE, it shows what files will be deleted in preview mode
+)
+7. 252-256 p.
+(
+	GIT GREP:
+		git grep -n <name> - show file:linenumber linecontext where name stores
+		git grep -p <name> - show file linecontext where name stores in FUNCTION or METHOD
+	GIT LOG SEARCH:
+		git log -S <name> --oneline - show oneline commit in which name was created or edited	
+		git log -L :<name>:<filename> - show the history of changes of name in filename line by line
+)
+8. 256-264 p.
+(
+	HISTORY REWRITING:
+		git commit --amend - change the last commit (change the commit message, add, remove files, etc.)
+		git rebase -i HEAD~(^)<n> - rebase on the parent of n-th commit
+			GIT REBASE -i:
+				edit - change the commit message, add, remove files, etc., then git add, git commit --amend, git rebase --continue
+				drop - delete a commit
+				squash - unit several commits
+				to split 1 commit into several:
+					edit, git reset HEAD^ (remove from stage area), git add, git commit, git rebase --continue		
+		git filter-branch --tree-filter -all 'rm -f <filename>' HEAD - delete a filename from each commit and all branches
+)
+9. 264-287 p.
+(
+	RESET:
+		GIT has 3 trees:
+			HEAD - the last commit, the parent of next one
+			INDEX (stage area) - the next commit
+			YOUR FOLDER - sandbox
+		git reset --soft HEAD~ - transfer a BRANCH!!! to the parent of current commit and change the HEAD tree
+		git reset [--mixed] HEAD~ - transfer a BRANCH!!! to the parent of current commit and change the HEAD, INDEX trees
+		git reset --hard HEAD~ - transfer a BRANCH!!! to the parent of current commit and change the HEAD, INDEX and YOUR FOLDER trees (if the last changes are not commited they're gonna be deleted forever)
+		git reset [--mixed] <filename> - reset filename from HEAD in INDEX
+		git reset <sha-1> -- <filename> - reset filename from sha-1 in INDEX
+	CHECKOUT:
+		when RESET transfer a branch, CHECKOUT transfer a HEAD on a branch
+		git checkout [branch] - transfer a HEAD to [branch]
+		git checkout [branch] <filename> - replace INDEX and YOUR FOLDER with last commit
+)
+10. 287-305 p.
+(
+	ADVANCED MERGING:
+		git merge --abort - cancel merging (everything will be ok, if it wasn't modifierd files)
+		git show :1:<file>.<fileextension> > <file>.common.<fileextension> - show the file of parent common commit
+		git show :2<...> - show the file of current branch
+		git show :3<...> - show the file of merged branch
+		git diff --ours [--theirs] - show what merging has brought
+		git reset --hard HEAD~ - revert a merge commit
+		git revert -m 1 HEAD - revert a merge commit with creating a "revert commit"
+		git merge -Xours [-Xtheirs] <branch> - merge of <branch> in current branch, if there's a conflict take [ours] or [theirs] version
+		git merge -s ours <branch> - merge of <branch> in current branch, but not take any change from <branch> (remain eth from current branch)
 )
 
+NOTE:
+	How the history is splited after branching?:
+		1. master, temp
+		2. make a commit on master
+		3. switch to temp
+		4. make a commit on temp
+		5. the history is splited
